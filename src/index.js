@@ -19,6 +19,7 @@ class ToDoList extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.showOrHideList = this.showOrHideList.bind(this);
     this.crossOrUncrossItem = this.crossOrUncrossItem.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   onChange(event) {
@@ -58,16 +59,20 @@ class ToDoList extends React.Component {
   }
   //work in progress...
   crossOrUncrossItem(id) {
-    // let currItem = this.state.items.filter(el => el.id === id);
-    // currItem.isCrossedOut = !currItem.isCrossedOut;
+    let currItem = this.state.items.filter(el => el.id === id);
+    let update = this.state.items.filter(el => el.id !== id);
+    currItem[0].isCrossedOut = !currItem[0].isCrossedOut;
     // console.log("Current item is...");
     // console.log(currItem);
-    // let update = this.state.items.filter(el => el.id !== id);
-    // update.push(currItem);
-    // console.log("After pushing current item to update " + update);
-    // this.setState({
-    //   items: update,
-    // });
+    update = update.concat(currItem);
+    // console.log(update);
+    this.setState({
+      items: update,
+    });
+  }
+
+  handleClick(event) {
+    console.log(event.target);
   }
 
   render() {
@@ -78,7 +83,7 @@ class ToDoList extends React.Component {
             <h2 className="title" onClick={this.showOrHideList}>To Do List</h2>
             <CreateNew value={this.state.term} onChange={this.onChange} onSubmit={this.onSubmit}/>
           </div>
-          <ListItems items={this.state.items} crossOrUncrossItem={this.crossOrUncrossItem} onDelete={this.deleteItem}/>
+          <ListItems handleClick={this.handleClick} items={this.state.items} crossOrUncrossItem={this.crossOrUncrossItem} onDelete={this.deleteItem}/>
         </div>
       );
     }
@@ -107,7 +112,7 @@ function ListItems(props) {
   return (
     <ul className="list">
       {props.items.map((item) => (
-        <li className="item" key={item.id} onClick={() => props.crossOrUncrossItem(item.id)}><button className="btn" onClick={() => props.onDelete(item.id)}>-</button> {item.text}</li>
+        <li className={`item ${(item.isCrossedOut)? "crossed-out" : ""}`} key={item.id}><button className="btn" onClick={() => props.onDelete(item.id)}>-</button> <span onClick={() => props.crossOrUncrossItem(item.id)}> {item.text}</span></li>
       ))}
     </ul>
   )

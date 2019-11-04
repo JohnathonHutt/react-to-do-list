@@ -63,6 +63,10 @@
   border-bottom: 2px solid transparent;
 }
 
+.crossed-out {
+  text-decoration: line-through;
+}
+
 .item:hover {
   background-color: rgb(237, 181, 245);
   color: white;
