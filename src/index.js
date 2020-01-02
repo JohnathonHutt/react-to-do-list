@@ -19,7 +19,6 @@ class ToDoList extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.showOrHideList = this.showOrHideList.bind(this);
     this.crossOrUncrossItem = this.crossOrUncrossItem.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   onChange(event) {
@@ -57,7 +56,7 @@ class ToDoList extends React.Component {
     });
     console.log(this.state.showList);
   }
-  //work in progress...
+ 
   crossOrUncrossItem(id) {
     let currItem = this.state.items.filter(el => el.id === id);
     let update = this.state.items.filter(el => el.id !== id);
@@ -71,10 +70,6 @@ class ToDoList extends React.Component {
     });
   }
 
-  handleClick(event) {
-    console.log(event.target);
-  }
-
   render() {
     if (this.state.showList) {
       return (
@@ -83,7 +78,7 @@ class ToDoList extends React.Component {
             <h2 className="title" onClick={this.showOrHideList}>To Do List</h2>
             <CreateNew value={this.state.term} onChange={this.onChange} onSubmit={this.onSubmit}/>
           </div>
-          <ListItems handleClick={this.handleClick} items={this.state.items} crossOrUncrossItem={this.crossOrUncrossItem} onDelete={this.deleteItem}/>
+          <ListItems items={this.state.items} crossOrUncrossItem={this.crossOrUncrossItem} onDelete={this.deleteItem}/>
         </div>
       );
     }
